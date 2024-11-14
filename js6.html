@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contatore con Immagine</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      background-color: #333;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-right: 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+    }
+
+    nav ul li a:hover {
+      background-color: #555;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      background-color: #333;
+      list-style-type: none;
+      padding: 10px 0;
+      margin: 0;
+    }
+
+    nav ul li:hover .dropdown {
+      display: block;
+    }
+
+    #counter-container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    #counter {
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    #image-container {
+      text-align: center;
+      display: none;
+    }
+
+    #image-container img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">HTML</a></li>
+      <li><a href="#">CSS</a></li>
+      <li><a href="#">JavaScript</a></li>
+      <li>
+        <a href="#">Esercizi</a>
+        <ul class="dropdown">
+          <li><a href="#">HTML Esercizi</a></li>
+          <li><a href="#">CSS Esercizi</a></li>
+          <li><a href="#">JavaScript Esercizi</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <div id="counter-container">
+    <div id="counter">3</div>
+    <div id="image-container">
+      <img src="https://via.placeholder.com/200" alt="Immagine nascosta">
+    </div>
+  </div>
+
+  <script>
+    let counter = 3;
+    const counterElement = document.getElementById('counter');
+    const imageContainer = document.getElementById('image-container');
+
+    function updateCounter() {
+      if (counter > 0) {
+        counterElement.textContent = counter;
+        counter--;
+      } else {
+        counterElement.textContent = "0";
+        imageContainer.style.display = "block";
+      }
+    }
+
+    setInterval(updateCounter, 1000);
+  </script>
+</body>
+</html>
