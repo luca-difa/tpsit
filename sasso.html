@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Sasso Carta Forbice</h1>
+<p>Al termine del contatore viene mostrata un'immagine casuale:</p>
+
+<p id="counter">3</p>
+<div id="image-container" style="display: none;">
+  <img id="game-image" src="" alt="" style="max-width: 100%; height: auto;">
+</div>
+<button id="restart-button" style="display: none;" onclick="restartGame()">Ricomincia</button>
+
+<script>
+let counter = 3;
+let timer;
+
+function updateCounter() {
+  if (counter > 0) {
+    document.getElementById("counter").innerHTML = counter;
+    counter--;
+  } else {
+    let x = Math.floor((Math.random() * 3) + 1);
+    let img = document.getElementById("game-image");
+
+    if (x === 1) {
+      img.src = "https://static.vecteezy.com/system/resources/thumbnails/051/495/724/small/a-white-stone-isolated-on-transparent-background-free-png.png";
+      img.alt = "Sasso";
+    } else if (x === 2) {
+      img.src = "https://img.freepik.com/psd-gratis/papera-di-pergamena-isolata_23-2151874492.jpg";
+      img.alt = "Carta";
+    } else if (x === 3) {
+      img.src = "https://e7.pngegg.com/pngimages/418/753/png-clipart-yellow-scissors-scissors-computer-file-scissors-rock-paper-scissors-scissors-hair-thumbnail.png";
+      img.alt = "Forbice";
+    }
+
+    document.getElementById("image-container").style.display = "block";
+    document.getElementById("restart-button").style.display = "inline";
+    clearInterval(timer);
+  }
+}
+
+function restartGame() {
+  counter = 3;
+  document.getElementById("counter").innerHTML = counter;
+  document.getElementById("image-container").style.display = "none";
+  document.getElementById("restart-button").style.display = "none";
+  timer = setInterval(updateCounter, 1000);
+}
+
+timer = setInterval(updateCounter, 1000);
+</script>
+
+</body>
+</html>
