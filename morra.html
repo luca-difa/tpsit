@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morra Cinese</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #choices img {
+            width: 100px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        #result {
+            font-size: 1.5em;
+            color: brown;
+            margin-top: 20px;
+        }
+        #score {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gioco della Morra Cinese</h1>
+    <div id="choices">
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/008/502/046/small/rock-stones-and-boulders-in-cartoon-style-free-png.png" alt="Sasso" onclick="playGame(0)">
+        <img src="https://thumbs.dreamstime.com/b/personaggio-dei-cartoni-animati-della-carta-bianco-64495974.jpg" alt="Carta" onclick="playGame(1)">
+        <img src="https://static.vecteezy.com/system/resources/previews/047/134/246/non_2x/cartoon-scissors-drawing-png.png" alt="Forbice" onclick="playGame(2)">
+    </div>
+    <div id="result"></div>
+    <div id="score"></div>
+
+    <script>
+        const morra = ["Sasso", "Carta", "Forbice"];
+        let userScore = 0;
+        let botScore = 0;
+
+        function playGame(userChoice) {
+            const botChoice = Math.floor(Math.random() * 3);
+            const resultDiv = document.getElementById("result");
+
+            resultDiv.innerHTML = "Il bot sta pensando...";
+            setTimeout(() => {
+                const botMove = morra[botChoice];
+                const userMove = morra[userChoice];
+                let result = "";
+
+                if (userChoice === botChoice) {
+                    result = "Pareggio!";
+                } else if (
+                    (userChoice === 0 && botChoice === 2) || 
+                    (userChoice === 1 && botChoice === 0) || 
+                    (userChoice === 2 && botChoice === 1)
+                ) {
+                    result = "Hai vinto!";
+                    userScore++;
+                } else {
+                    result = "Hai perso!";
+                    botScore++;
+                }
+
+                resultDiv.innerHTML = `Hai scelto ${userMove}. Il bot ha scelto ${botMove}. ${result}`;
+                morraScore();
+            }, 1000);
+        }
+
+        function morraScore() {
+            const scoreDiv = document.getElementById("score");
+            scoreDiv.innerHTML = `Punteggio - Tu: ${userScore}, Bot: ${botScore}`;
+        }
+    </script>
+</body>
+</html>
