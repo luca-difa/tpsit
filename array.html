@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporizzatore con Numeri Casuali</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estrazione Numeri Casuali</h1>
+    <p>Un numero casuale tra 1 e 90 viene estratto ogni 3 secondi.</p>
+    
+    <div class="output">
+        <p><strong>Numeri estratti:</strong> <span id="numbers"></span></p>
+        <p><strong>Media dei numeri:</strong> <span id="average"></span></p>
+    </div>
+
+    <script>
+        let numbersArray = [];
+
+        function getRandomNumber() {
+            return Math.floor(Math.random() * 90) + 1;
+        }
+
+        function calculateAverage() {
+            let sum = numbersArray.reduce((acc, num) => acc + num, 0);
+            return sum / numbersArray.length;
+        }
+
+        function updateDisplay() {
+            document.getElementById("numbers").textContent = numbersArray.join(", ");
+            const average = calculateAverage();
+            document.getElementById("average").textContent = average.toFixed(2);
+        }
+
+        setInterval(function() {
+            let randomNumber = getRandomNumber();
+            numbersArray.push(randomNumber);
+            updateDisplay();
+        }, 3000);
+    </script>
+</body>
+</html>
