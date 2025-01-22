@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.card-flip {
+  background-color: transparent;
+  width: 300px;
+  height: 300px;
+  perspective: 1000px;
+}
+
+.card-flip-interno {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.card-flip:hover .card-flip-interno {
+  transform: rotateY(180deg);
+}
+
+.card-flip-fronte, .card-flip-retro {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.card-flip-fronte {
+  background-color: #bbb;
+  color: black;
+}
+
+.card-flip-retro {
+  background-color: #2980b9;
+  color: white;
+  transform: rotateY(180deg);
+}
+</style>
+</head>
+<body>
+
+<h1>Card Flip con Testo</h1>
+<h3>Passa sopra l'immagine qui sotto:</h3>
+
+<div class="card-flip">
+  <div class="card-flip-interno">
+    <div class="card-flip-fronte">
+      <img src="jane.png" alt="Nuovo Avatar" style="width:300px;height:300px;">
+    </div>
+    <div class="card-flip-retro">
+      <h1>Jane Smith</h1>
+      <p>Sviluppatore Web & Designer</p>
+      <p>Soluzioni creative per il design web moderno</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
