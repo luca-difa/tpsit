@@ -1,0 +1,91 @@
+
+js 3 modifica proprietà di visibilità
+Marco Palladino
+•
+31 ott 2024
+100 punti
+Consegna: 6 nov 2024, 08:00
+crea una pagina web con 5 aforismi di scienziati
+messi in div e p
+
+crea 5 bottoni che possano nascondere i testi 
+
+prendi esempio dal codice seguente
+
+
+<p id="testo">Questo è un testo da nascondere.</p> 
+  <button onclick="nascondiTesto()">Nascondi Testo</button> 
+
+ 
+<script>
+function nascondiTesto() 
+{
+const testo = document.getElementById("testo");
+testo.style.display = "none"; 
+// Nasconde il testo impostando display a 'none'
+} 
+  </script>
+Commenti sul corso
+Il tuo lavoro
+Consegnato
+
+js3.html
+HTML
+Commenti privati
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aforismi di Scienziati</title>
+    <style>
+        .aforisma {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="aforisma">
+        <p id="aforisma1">"La scienza è organizzata conoscenza." - Herbert Spencer</p>
+        <button onclick="toggleTesto('aforisma1', this)">Nascondi Testo</button>
+    </div>
+
+    <div class="aforisma">
+        <p id="aforisma2">"La misura di intelligenza è la capacità di cambiare." - Albert Einstein</p>
+        <button onclick="toggleTesto('aforisma2', this)">Nascondi Testo</button>
+    </div>
+
+    <div class="aforisma">
+        <p id="aforisma3">"Non possiamo risolvere i nostri problemi con lo stesso modo di pensare che abbiamo usato per crearli." - Albert Einstein</p>
+        <button onclick="toggleTesto('aforisma3', this)">Nascondi Testo</button>
+    </div>
+
+    <div class="aforisma">
+        <p id="aforisma4">"La scienza è la poesia della realtà." - Richard Dawkins</p>
+        <button onclick="toggleTesto('aforisma4', this)">Nascondi Testo</button>
+    </div>
+
+    <div class="aforisma">
+        <p id="aforisma5">"La natura non è mai stata così buona con noi." - Carl Sagan</p>
+        <button onclick="toggleTesto('aforisma5', this)">Nascondi Testo</button>
+    </div>
+
+    <script>
+        function toggleTesto(id, button) {
+            const testo = document.getElementById(id);
+            if (testo.style.display === "none") {
+                testo.style.display = "block"; 
+                button.textContent = "Nascondi Testo";
+            } else {
+                testo.style.display = "none"; 
+                button.textContent = "Mostra Testo";
+            }
+        }
+    </script>
+
+</body>
+</html>
