@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bottoni con orario</title>
+    <style>
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Premi i bottoni</h1>
+
+    <button id="btn1">Bottone 1</button>
+    <button id="btn2">Bottone 2</button>
+    <button id="btn3">Bottone 3</button>
+    <button id="btn4">Bottone 4</button>
+
+    <div id="dataOra"></div>
+    <div id="tempi"></div>
+
+    <script>
+        let tempiClick = [];
+        let primoClick = null;
+
+        function gestisciClick() {
+            const oraAttuale = new Date();
+            const dataOra = oraAttuale.toLocaleString();
+            
+            document.getElementById("dataOra").innerHTML = "Data e ora corrente: " + dataOra;
+            
+            if (primoClick === null) {
+                primoClick = oraAttuale;
+                document.getElementById("tempi").innerHTML = "Primo click registrato!";
+            } else {
+                const differenzaTempo = oraAttuale - primoClick;
+                const secondi = (differenzaTempo / 1000).toFixed(3);
+                const decimi = (differenzaTempo / 100).toFixed(1);
+                const millesimi = (differenzaTempo).toFixed(0);
+
+                tempiClick.push({ secondi, decimi, millesimi });
+
+                document.getElementById("tempi").innerHTML += `
+                    <p>Tempo tra il primo clic e il clic corrente:</p>
+                    <ul>
+                        <li>Secondi: ${secondi}s</li>
+                        <li>Decimi: ${decimi}s</li>
+                        <li>Millesimi: ${millesimi}ms</li>
+                    </ul>
+                `;
+            }
+        }
+
+        document.getElementById("btn1").addEventListener("click", gestisciClick);
+        document.getElementById("btn2").addEventListener("click", gestisciClick);
+        document.getElementById("btn3").addEventListener("click", gestisciClick);
+        document.getElementById("btn4").addEventListener("click", gestisciClick);
+    </script>
+
+</body>
+</html>
