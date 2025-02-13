@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJw5IEzQ0n8f+oVt5wYtfTg9v3rjHlfk2D7PbmN7y69lLl6L3SY1iUpkd0nZ" crossorigin="anonymous">
+    <style>
+        .btn-light.active {
+            background-color: #ffeb3b;
+            box-shadow: 0 0 10px rgba(255, 235, 59, 0.8);
+        }
+        .btn {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            font-size: 24px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+            max-width: 440px;
+            margin: 50px auto;
+        }
+        #startButton {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h1>Memory Game</h1>
+        <div class="game-board">
+            <button class="btn btn-light" id="btn1"></button>
+            <button class="btn btn-light" id="btn2"></button>
+            <button class="btn btn-light" id="btn3"></button>
+            <button class="btn btn-light" id="btn4"></button>
+            <button class="btn btn-light" id="btn5"></button>
+            <button class="btn btn-light" id="btn6"></button>
+            <button class="btn btn-light" id="btn7"></button>
+            <button class="btn btn-light" id="btn8"></button>
+            <button class="btn btn-light" id="btn9"></button>
+            <button class="btn btn-light" id="btn10"></button>
+            <button class="btn btn-light" id="btn11"></button>
+            <button class="btn btn-light" id="btn12"></button>
+            <button class="btn btn-light" id="btn13"></button>
+            <button class="btn btn-light" id="btn14"></button>
+            <button class="btn btn-light" id="btn15"></button>
+            <button class="btn btn-light" id="btn16"></button>
+        </div>
+        <button class="btn btn-primary" id="startButton">Start Game</button>
+        <div id="message"></div>
+        <div id="score">Score: 0</div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = Array.from(document.querySelectorAll('.btn'));
+            const startButton = document.getElementById('startButton');
+            const message = document.getElementById('message');
+            const scoreDisplay = document.getElementById('score');
+
+            let sequence = [];
+            let userInput = [];
+            let score = 0;
+            let gameActive = false;
+
+            startButton.addEventListener('click', startGame);
+
+            function startGame() {
+                score = 0;
+                userInput = [];
+                sequence = [];
+                gameActive = true;
+                updateMessage("Memorizza la sequenza!");
+                updateScore();
+                generateSequence();
+                showSequence();
+            }
+
+            function generateSequence() {
+                sequence.push(Math.floor(Math.random() * buttons.length));
+            }
+
+            function showSequence() {
+                let index = 0;
+                const interval = setInterval(() => {
+                    if (index >= sequence.length) {
+                        clearInterval(interval);
+                        enableUserInput();
+                    } else {
+                        highlightButton(sequence[index]);
+                        index++;
+                    }
+                }, 1000);
+            }
+
+            function highlightButton(index) {
+                buttons[index].classList.add('active');
+                setTimeout(() => {
+                    buttons[index].classList.remove('active');
+                }, 500);
+            }
+
+            function enableUserInput() {
+                buttons.forEach(button => {
+                    button.addEventListener('click', handleUserClick);
+                });
+            }
+
+            function handleUserClick(event) {
+                if (!gameActive) return;
+
+                const index = buttons.indexOf(event.target);
+                userInput.push(index);
+                highlightButton(index);
+
+                if (userInput.length === sequence.length) {
+                    if (JSON.stringify(userInput) === JSON.stringify(sequence)) {
+                        score++;
+                        updateScore();
+                        updateMessage("Corretto! Prosegui con la sequenza.");
+                        userInput = [];
+                        generateSequence();
+                        setTimeout(() => showSequence(), 1000);
+                    } else {
+                        updateMessage("Errore! Il gioco si resetta.");
+                        gameActive = false;
+                        setTimeout(() => startGame(), 2000);
+                    }
+                }
+            }
+
+            function updateScore() {
+                scoreDisplay.textContent = `Score: ${score}`;
+            }
+
+            function updateMessage(msg) {
+                message.textContent = msg;
+            }
+        });
+    </script>
+</body>
+</html>
