@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipolazione Stringhe</title>
+</head>
+<body>
+
+    <h2>Inserisci due stringhe</h2>
+    <input type="text" id="stringA" placeholder="Stringa A">
+    <input type="text" id="stringB" placeholder="Stringa B">
+    <button onclick="calcola()">Calcola</button>
+
+    <p id="risultato"></p>
+
+    <script>
+        function calcola() {
+            let a = document.getElementById("stringA").value;
+            let b = document.getElementById("stringB").value;
+
+            let lunghezzaA = a.length;
+            let lunghezzaB = b.length;
+            let invertitaA = a.split("").reverse().join("");
+            let invertitaB = b.split("").reverse().join("");
+            let unione = a + b;
+            let sommaLunghezze = lunghezzaA + lunghezzaB;
+            let messaggio = sommaLunghezze;
+            
+            if (lunghezzaB > 20) {
+                messaggio += " (B troppo lunga)";
+            }
+
+            document.getElementById("risultato").innerHTML = `
+                Lunghezza A: ${lunghezzaA}, Lunghezza B: ${lunghezzaB}<br>
+                Invertita A: ${invertitaA}, Invertita B: ${invertitaB}<br>
+                Stringhe Unite: ${unione}<br>
+                Somma Lunghezze: ${messaggio}
+            `;
+        }
+    </script>
+
+</body>
+</html>
