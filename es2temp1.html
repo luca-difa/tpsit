@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movimento Quadrato</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        #square {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="square"></div>
+
+    <script>
+        let square = document.getElementById("square");
+        let x = 50, y = 50;
+        let direction = "east"; // direzione iniziale
+
+        function moveSquare() {
+            switch (direction) {
+                case "east":
+                    x += 10;  // muovi verso est
+                    if (x > window.innerWidth - 50) direction = "south";
+                    break;
+                case "south":
+                    y += 10;  // muovi verso sud
+                    if (y > window.innerHeight - 50) direction = "west";
+                    break;
+                case "west":
+                    x -= 10;  // muovi verso ovest
+                    if (x < 0) direction = "north";
+                    break;
+                case "north":
+                    y -= 10;  // muovi verso nord
+                    if (y < 0) direction = "east";
+                    break;
+            }
+            square.style.left = `${x}px`;
+            square.style.top = `${y}px`;
+        }
+
+        setInterval(moveSquare, 100); // ogni 100ms
+    </script>
+</body>
+</html>
+
