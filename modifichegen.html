@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generatore di Numeri Casuali</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <h1>Generatore di Numeri Casuali</h1>
+  <canvas id="myChart"></canvas>
+
+  <script>
+    let arrayNumeriCasuali = [];
+    let nCount = 0;
+    
+    let ctx = document.getElementById('myChart').getContext('2d');
+    let chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Numeri Casuali',
+          data: [],
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+        }]
+      }
+    });
+
+    setInterval(() => {
+      let numeroCasuale = Math.random();
+      arrayNumeriCasuali.push(numeroCasuale);
+
+      chart.data.labels.push(chart.data.labels.length);
+      chart.data.datasets[0].data.push(numeroCasuale);
+      chart.update();
+
+      nCount++;
+      if (nCount === 50) {
+        let media = arrayNumeriCasuali.slice(-50).reduce((acc, num) => acc + num, 0) / 50;
+        console.log("Media degli ultimi 50 numeri: ", media);
+        nCount = 0;
+      }
+    }, 500);
+  </script>
+
+</body>
+</html>
