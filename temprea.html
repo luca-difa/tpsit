@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Gioco dei Colori</title>
+  <style>
+    #box {
+      width: 150px;
+      height: 150px;
+      margin: 50px auto;
+      display: none;
+      cursor: pointer;
+      border: 3px solid #000;
+    }
+    #info {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align:center;"> Clicca il colore <span id="targetColorText">Rosso</span>!</h2>
+  <div id="box"></div>
+  <div id="info">
+    <p>Tempi di reazione:</p>
+    <ul id="reactionList"></ul>
+  </div>
+
+  <script>
+    const colors = ["red", "blue", "green", "yellow"];
+    const targetColor = "red"; 
+    const reactionTimes = [];
+
+    const box = document.getElementById("box");
+    const reactionList = document.getElementById("reactionList");
+    const targetColorText = document.getElementById("targetColorText");
+    targetColorText.textContent = targetColor.charAt(0).toUpperCase() + targetColor.slice(1);
+
+    let startTime = null;
+    let interval = null;
+
+    function showBox() {
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      box.style.backgroundColor = color;
+      box.style.display = "block";
+
+      if (color === targetColor) {
+        startTime = Date.now();
+      } else {
+        startTime = null;
+      }
+    }
+
+    function handleClick() {
+      if (box.style.backgroundColor === targetColor && startTime !== null) {
+        const reactionTime = Date.now() - startTime;
+        reactionTimes.push(reactionTime);
+        const li = document.createElement("li");
+        li.textContent = `${reactionTime} ms`;
+        reactionList.appendChild(li);
+      }
+      box.style.display = "none";
+    }
+
+    box.addEventListener("click", handleClick);
+
+    
+    interval = setInterval(showBox, 2000);
+  </script>
+
+</body>
+</html>
