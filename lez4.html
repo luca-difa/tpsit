@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Esercizi Vue 3</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <style>
+    .errore { color: red; }
+    .messaggio-salvataggio { font-style: italic; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h2>1. Controllo Maggiore Età</h2>
+    <label>Età: <input type="number" v-model.number="eta" min="0" /></label>
+    <p>Messaggio: {{ messaggioEta }}</p>
+
+    <hr>
+
+    <h2>2. Carrello Semplice</h2>
+    <ul>
+      <li v-for="(prodotto, index) in carrello" :key="index">
+        {{ prodotto.nome }} - €{{ prodotto.prezzo.toFixed(2) }}
+      </li>
+    </ul>
+    <p><strong>Totale: €{{ totaleCarrello.toFixed(2) }}</strong></p>
+
+    <hr>
+
+    <h2>3. Validazione Input Username</h2>
+    <label>Username: <input type="text" v-model="username" /></label>
+    <p v-if="erroreUsername" class="errore">Username troppo corto (minimo 5 caratteri)</p>
+
+    <hr>
+
+    <h2>4. Salvataggio Automatico</h2>
+    <label>Contenuto:
+      <textarea v-model="contenuto" rows="3" cols="30"></textarea>
+    </label>
+    <p class="messaggio-salvataggio">{{ messaggioSalvataggio }}</p>
+  </div>
+
+  <script>
+    const { createApp, computed, watch } = Vue;
+
+    createApp({
+      data() {
+        return {
+          // 1. Controllo maggiore età
+          eta: 0,
+
+          // 2. Carrello semplice
+          carrello: [
+            { nome: 'Libro', prezzo: 15.99 },
+            { nome: 'Penna', prezzo: 1.50 },
+            { nome: 'Quaderno', prezzo: 3.25 }
+          ],
+
+          // 3. Validazione username
+          username: '',
+
+          // 4. Salvataggio automatico
+          contenuto: '',
+          messaggioSalvataggio: ''
+        };
+      },
+      computed: {
+        // 1.
+        messaggioEta() {
+          return this.eta >= 18 ? "Maggiorenne" : "Minorenne";
+        },
+
+        // 2.
+        totaleCarrello() {
+          return this.carrello.reduce((acc, prod) => acc + prod.prezzo, 0);
+        },
+
+        // 3.
+        erroreUsername() {
+          return this.username.length > 0 && this.username.length < 5;
+        }
+      },
+      watch: {
+        // 3. Username controllo in watch per mostrare errore appena cambia
+        username(newVal) {
+          // Non serve codice specifico, errore gestito da computed
+        },
+
+        // 4. Salvataggio automatico
+        contenuto(newVal) {
+          this.messaggioSalvataggio = "Sto salvando...";
+          clearTimeout(this.timeoutSalvataggio);
+          this.timeoutSalvataggio = setTimeout(() => {
+            this.messaggioSalvataggio = "Salvato!";
+          }, 1000);
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
