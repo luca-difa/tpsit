@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>App Vue Standalone</title>
+  <style>
+    .message-box {
+      padding: 10px;
+      color: white;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    .success {
+      background-color: green;
+    }
+    .error {
+      background-color: red;
+    }
+
+    .avatar {
+      border-radius: 50%;
+      margin-bottom: 10px;
+      transition: all 0.3s;
+      border: 2px solid #ccc;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    input[type="number"] {
+      width: 60px;
+      margin-left: 5px;
+    }
+
+    input[type="color"] {
+      margin-left: 5px;
+      vertical-align: middle;
+    }
+
+    .saluto {
+      padding: 10px;
+      background-color: #eee;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 6px;
+      box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div id="app" style="padding: 20px; font-family: Arial, sans-serif; max-width: 600px; margin: auto;">
+    <!-- Stato del Messaggio -->
+    <section>
+      <h2>Stato del Messaggio</h2>
+      <div :class="messageClass" class="message-box">
+        Questo è il messaggio.
+      </div>
+      <button @click="setSuccess">Imposta come Successo</button>
+      <button @click="setError">Imposta come Errore</button>
+    </section>
+
+    <hr />
+
+    <!-- Avatar Personalizzabile -->
+    <section>
+      <h2>Avatar Personalizzabile</h2>
+      <div 
+        class="avatar" 
+        :style="{ width: width + 'px', height: height + 'px', backgroundColor: backgroundColor }"
+      ></div>
+      <label>
+        Width:
+        <input type="number" v-model.number="width" min="10" />
+      </label>
+      <label>
+        Height:
+        <input type="number" v-model.number="height" min="10" />
+      </label>
+      <label>
+        Background Color:
+        <input type="color" v-model="backgroundColor" />
+      </label>
+    </section>
+
+    <hr />
+
+    <!-- Saluto Personale -->
+    <section>
+      <h2>Saluto Personale</h2>
+      <saluto-utente></saluto-utente>
+      <saluto-utente></saluto-utente>
+    </section>
+
+    <hr />
+
+    <!-- Card Semplice -->
+    <section>
+      <h2>Card Semplice</h2>
+      <info-card></info-card>
+    </section>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script>
+    const { createApp } = Vue
+
+    // Componenti definiti globalmente
+    const SalutoUtente = {
+      template: `<div class="saluto">Benvenuto nella nostra applicazione!</div>`
+    }
+
+    const InfoCard = {
+      template: `
+        <div class="card">
+          <h3>Titolo della Card</h3>
+          <p>Contenuto della card...</p>
+        </div>
+      `
+    }
+
+    createApp({
+      data() {
+        return {
+          status: '',
+          width: 100,
+          height: 100,
+          backgroundColor: '#3498db'
+        }
+      },
+      computed: {
+        messageClass() {
+          return {
+            success: this.status === 'success',
+            error: this.status === 'error'
+          }
+        }
+      },
+      methods: {
+        setSuccess() {
+          this.status = 'success'
+        },
+        setError() {
+          this.status = 'error'
+        }
+      },
+      components: {
+        'saluto-utente': SalutoUtente,
+        'info-card': InfoCard
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>
